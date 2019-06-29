@@ -3,11 +3,11 @@ package com.mashup.allnight.resources;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
-@Path("/test")
-public class resource {
+@Path("/health")
+public class CheckResource {
 
     @GET
-    public String testing(){
-        return "Fuck You";
+    public String test(){
+        return "God Damn!";
     }
 }

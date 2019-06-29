@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <annotationProcessing>
-      <profile name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="keyJersey" />
-      </profile>
-    </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="keyJersey" target="1.5" />
+      <module name="allnight" target="8" />
+      <module name="apibase" target="8" />
+      <module name="apiservice" target="8" />
+      <module name="elasticsearch" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,7 +1,6 @@
-package com.mashup.allnight;
+package com.mashup.allnight.config;
 
 import org.glassfish.jersey.server.ResourceConfig;
-import java.util.Optional;
 public class Application extends ResourceConfig {
 
     public Application() {

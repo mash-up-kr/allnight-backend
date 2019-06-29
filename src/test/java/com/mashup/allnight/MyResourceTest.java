@@ -1,4 +1,4 @@
-package com.key;
+package com.mashup.allnight;
 
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.After;

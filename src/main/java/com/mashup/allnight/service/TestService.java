@@ -1,4 +1,4 @@
-package com.key.service;
+package com.mashup.allnight.service;
 
 public class TestService {
 }

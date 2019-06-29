@@ -1,4 +1,4 @@
-package com.key;
+package com.mashup.allnight;
 
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
@@ -16,7 +16,7 @@ public class App {
      * @return Grizzly HTTP server.
      */
     public static HttpServer startServer() {
-        // create a resource config that scans for JAX-RS resources and providers
+        // create a CheckResource config that scans for JAX-RS resources and providers
         // in com.example package
         final ResourceConfig rc = new ResourceConfig().packages("com.key");
 
