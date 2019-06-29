@@ -1,4 +1,4 @@
-package com.key;
+package com.mashup.allnight.resources;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
