@@ -1,19 +1,27 @@
 package com.mashup.allnight.resources;
 
+import com.mashup.allnight.service.SearchService;
+import com.mashup.allnight.service.SearchServiceImpl;
 import org.elasticsearch.common.Nullable;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchResource {
 
+//    @Inject
+//    private SearchService searchService;
+
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String searchIngredient(@QueryParam("ingredient") String ingredient) {
-        return ingredient;
+    public List<String> searchIngredient(@QueryParam("ingredient") String ingredient) throws IOException {
+        return SearchServiceImpl.searchIngredient(ingredient);
     }
 
     @GET
