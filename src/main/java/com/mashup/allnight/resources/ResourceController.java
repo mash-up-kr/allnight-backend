@@ -7,7 +7,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-@Path("app/api/v1")
+@Path("api/v1")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ResourceController {
@@ -17,9 +17,9 @@ public class ResourceController {
         return new SearchResource();
     }
 
-//    @Path("/auth")
-//    public AuthResource checkUserAuth() {
-//        return new AuthResource();
-//    }
+    @Path("/user")
+    public UserResource checkUserAuth() {
+        return new UserResource();
+    }
 
 }

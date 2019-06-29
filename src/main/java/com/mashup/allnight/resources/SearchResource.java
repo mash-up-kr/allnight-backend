@@ -1,19 +1,43 @@
 package com.mashup.allnight.resources;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import org.elasticsearch.common.Nullable;
+
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchResource {
 
     @GET
-    @Path("aaa")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String searchDataById() {
-       return "ABC";
+    public String searchIngredient(@QueryParam("ingredient") String ingredient) {
+        return ingredient;
+    }
+
+    @GET
+    @Path("/cocktail")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String searchCocktail(@QueryParam("ingredients") List<String> ingredients,
+                                 @QueryParam("0") int offset,
+                                 @DefaultValue("14") @QueryParam("size") int size,
+                                 @Nullable @DefaultValue("true") @QueryParam("isAlcohol") boolean isAlcohol,
+                                 @Nullable @QueryParam("ingredientCount") int ingredientCount) {
+        return cleanNames(ingredients);
+    }
+
+    @GET
+    @Path("/cocktail/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String searchCocktail(@PathParam("id") String id) {
+        return id;
+    }
+
+    private String cleanNames(List<String> input) {
+        return input.stream().filter(v -> v.length() > 1).map(String::toUpperCase).reduce((x, y) -> x + "," + y).get();
     }
 
 }
