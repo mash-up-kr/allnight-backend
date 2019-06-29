@@ -15,6 +15,8 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.sort.FieldSortBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 
 
 import java.io.IOException;
@@ -33,9 +35,6 @@ public class SearchServiceImpl extends BaseService implements SearchService {
     public static List<String> searchIngredient(String ingredient) throws IOException {
 
         System.out.println(ingredient);
-        RestHighLevelClient client = new RestHighLevelClient(
-                RestClient.builder(
-                        new HttpHost("13.209.250.163", 9200, "http")));
 
         MultiSearchRequest multiSearchRequest = new MultiSearchRequest();
 
@@ -120,8 +119,37 @@ public class SearchServiceImpl extends BaseService implements SearchService {
         return resIngredient;
     }
 
-    public static void searchCocktail() {
+    public static String searchCocktail(List<String> ingredients, int offset, int size) throws IOException {
+        System.out.println(ingredients.toString());
+        System.out.println(offset);
+        System.out.println(size);
 
+        String[] includeFields = new String[] {"ingredient01", "ingredient02", "ingredient03", "ingredient04", "ingredient05"};
+        String[] excludeFields = new String[] {};
+
+
+
+        SearchRequest oneSearchRequest = new SearchRequest("cocktail");
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+//        searchSourceBuilder.fetchSource(includeFields, excludeFields);
+
+        searchSourceBuilder.query(
+                QueryBuilders.boolQuery()
+                        .filter(QueryBuilders.termQuery("ingredient01", ingredients.get(0)))
+                        .filter(QueryBuilders.termQuery("ingredient02", ingredients.get(0)))
+                        .filter(QueryBuilders.termQuery("ingredient03", ingredients.get(0)))
+                        .filter(QueryBuilders.termQuery("ingredient04", ingredients.get(0)))
+                        .filter(QueryBuilders.termQuery("ingredient05", ingredients.get(0))));
+
+        searchSourceBuilder.from(0);
+        searchSourceBuilder.size(500);
+        oneSearchRequest.source(searchSourceBuilder);
+
+        SearchResponse searchResponse = client.search(oneSearchRequest, RequestOptions.DEFAULT);
+
+        System.out.println(searchResponse.getHits().getTotalHits());
+
+        return "Success";
     }
 
     public static void searchCocktailById() {

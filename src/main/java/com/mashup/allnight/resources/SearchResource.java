@@ -30,10 +30,10 @@ public class SearchResource {
     @Produces(MediaType.APPLICATION_JSON)
     public String searchCocktail(@QueryParam("ingredients") List<String> ingredients,
                                  @QueryParam("0") int offset,
-                                 @DefaultValue("14") @QueryParam("size") int size,
+                                 @DefaultValue("500") @QueryParam("size") int size,
                                  @Nullable @DefaultValue("true") @QueryParam("isAlcohol") boolean isAlcohol,
-                                 @Nullable @QueryParam("ingredientCount") int ingredientCount) {
-        return cleanNames(ingredients);
+                                 @Nullable @QueryParam("ingredientCount") int ingredientCount) throws IOException {
+        return SearchServiceImpl.searchCocktail(ingredients, offset, size);
     }
 
     @GET
