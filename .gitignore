@@ -1,5 +1,10 @@
-target/
-.idea
-*.iws
-*.ipr
-*.iml
+target/allnight
+target/classes
+target/generated-sources
+target/generated-test-sources
+target/maven-archiver
+target/maven-status
+target/surefire-reports
+target/test-classes
+.DS_Store
+.idea/*
