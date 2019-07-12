@@ -1,7 +1,6 @@
 package com.mashup.allnight.dto.requset;
 
 
-import javax.enterprise.inject.spi.Bean;
 import java.util.Iterator;
 import java.util.Set;
 

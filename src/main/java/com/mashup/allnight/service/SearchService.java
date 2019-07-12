@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface SearchService {
 
-    List<String> searchIngredient(String ingredient);
+    String searchIngredient(String ingredient);
 
 
     void searchCocktail();

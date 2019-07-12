@@ -2,26 +2,27 @@ package com.mashup.allnight.resources;
 
 import com.mashup.allnight.service.SearchService;
 import com.mashup.allnight.service.SearchServiceImpl;
-import com.mashup.allnight.service.SearchServiceType;
-import com.mashup.allnight.service.SearchServiceType.ServiceType;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.io.IOException;
+import javax.ws.rs.ext.Provider;
 
+@Provider
+@Path("/search")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class SearchResource {
 
     @Inject
-    @SearchServiceType(ServiceType.SEARCH)
     private SearchService searchService;
 
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String searchIngredient(@QueryParam("ingredient") String ingredient) throws IOException {
-        return searchService.testFunction(ingredient);
-//        return SearchServiceImpl.searchIngredient(ingredient);
+    public String searchIngredient(@QueryParam("ingredient") String ingredient) {
+//        return searchService.testFunction(ingredient);
+        return searchService.searchIngredient(ingredient);
     }
 //
 //    @GET

@@ -14,7 +14,7 @@ public @interface SearchServiceType {
 
     ServiceType value();
 
-    public enum ServiceType{
-        SEARCH;
+    enum ServiceType{
+        SEARCH
     }
 }

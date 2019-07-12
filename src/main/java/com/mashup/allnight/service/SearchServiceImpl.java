@@ -10,16 +10,16 @@ import com.mashup.allnight.service.SearchServiceType.ServiceType;
 @SuppressWarnings("Duplicates")
 //@Named("Test")
 //@Default
-@SearchServiceType(ServiceType.SEARCH)
+//@SearchServiceType(ServiceType.SEARCH)
 public class SearchServiceImpl extends BaseService implements SearchService {
 
     @Override
-    public List<String> searchIngredient(String ingredient) {
+    public String searchIngredient(String ingredient) {
 
         List<String> temp = new ArrayList<>();
         temp.add("abc");
 
-        return temp;
+        return "abcasd";
 
         //Todo 이전내용
 
