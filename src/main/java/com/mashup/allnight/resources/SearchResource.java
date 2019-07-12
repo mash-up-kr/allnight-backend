@@ -24,7 +24,7 @@ public class SearchResource {
 //        return searchService.testFunction(ingredient);
         return searchService.searchIngredient(ingredient);
     }
-//
+
 //    @GET
 //    @Path("/cocktail")
 //    @Consumes(MediaType.APPLICATION_JSON)

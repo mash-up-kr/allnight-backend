@@ -25,7 +25,6 @@ public class ElasticSearchClient {
         }
         return searchInstance;
     }
-
     /**
      * V.5.5 - Transport.Tcp
      */
