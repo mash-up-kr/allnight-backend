@@ -1,8 +1,8 @@
-package com.mashup.allnight.server;
+package com.mashup.allnight.config;
 
 import com.mashup.allnight.config.CorsOption;
 import com.mashup.allnight.config.ServiceBinder;
-import org.glassfish.jersey.jackson.JacksonFeature;
+//import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
 import org.glassfish.jersey.server.validation.ValidationFeature;
@@ -19,7 +19,7 @@ public class Application extends ResourceConfig {
         packages("com.mashup.allnight");
 
         register(CorsOption.class);
-        register(new JacksonFeature());
+//        register(new JacksonFeature());
         register(new ServiceBinder());
         register(ValidationFeature.class);
 
