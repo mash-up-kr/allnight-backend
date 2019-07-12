@@ -21,7 +21,7 @@ import java.util.List;
 public class SearchResource {
 
     @Inject
-    private SearchService searchService = new SearchServiceImpl();
+    private SearchService searchService;
 
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
