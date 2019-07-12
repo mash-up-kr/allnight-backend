@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-@Path("/search")
+@Path("/api/v1/search")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class SearchResource {

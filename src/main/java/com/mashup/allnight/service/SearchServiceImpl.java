@@ -19,7 +19,7 @@ public class SearchServiceImpl extends BaseService implements SearchService {
         List<String> temp = new ArrayList<>();
         temp.add("abc");
 
-        return "abcasd";
+        return ingredient;
 
         //Todo 이전내용
 
