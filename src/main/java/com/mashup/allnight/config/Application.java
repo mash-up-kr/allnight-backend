@@ -1,12 +1,8 @@
 package com.mashup.allnight.config;
 
-import com.mashup.allnight.service.SearchService;
-import com.mashup.allnight.service.SearchServiceImpl;
-import org.glassfish.hk2.utilities.binding.AbstractBinder;
+import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
-
-import javax.inject.Singleton;
 
 public class Application extends ResourceConfig {
 
@@ -20,13 +16,15 @@ public class Application extends ResourceConfig {
         packages(true, "com.mashup.allnight");
 
         register(CorsOption.class);
-//        register(new ServiceBinder());
+        register(new JacksonFeature());
+        register(new ServiceBinder());
 //        register(ServiceBinder.class);
-//        register(new AbstractBinder() {
-//            @Override
-//            protected void configure() {
-//                bind(SearchServiceImpl.class).to(SearchService.class).in(Singleton.class);
-//            }
-//        });
+
+
+//        register(new CDIConfig());
+//        Weld weld = new Weld();
+//        WeldContainer container = weld.initialize();
+//        SearchProcessor searchProcessor = container.select(SearchProcessor.class).get();
+
     }
 }
