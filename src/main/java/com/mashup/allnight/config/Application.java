@@ -20,6 +20,6 @@ public class Application extends ResourceConfig {
         packages(true, "com.mashup.allnight");
 
         register(CorsOption.class);
-//        register(new ServiceBinder());
+        register(new ServiceBinder());
     }
 }

@@ -15,12 +15,12 @@ import java.util.List;
 
 
 @Provider
-@Path("/search")
+@Path("/api/v1/search")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class SearchResource {
 
-//    @Inject
+    @Inject
     private SearchService searchService = new SearchServiceImpl();
 
     @GET
