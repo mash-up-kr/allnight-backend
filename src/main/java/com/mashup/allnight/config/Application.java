@@ -20,13 +20,6 @@ public class Application extends ResourceConfig {
         packages(true, "com.mashup.allnight");
 
         register(CorsOption.class);
-//        register(new ServiceBinder());
-//        register(ServiceBinder.class);
-//        register(new AbstractBinder() {
-//            @Override
-//            protected void configure() {
-//                bind(SearchServiceImpl.class).to(SearchService.class).in(Singleton.class);
-//            }
-//        });
+        register(new ServiceBinder());
     }
 }
