@@ -17,6 +17,6 @@ public class CheckResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String test(){
-        return "God Damn!";
+        return "God Damn!!!!!!!!!";
     }
 }
