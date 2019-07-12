@@ -12,7 +12,7 @@
 
     <servlet-mapping>
         <servlet-name>allnight</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/api/v1/*</url-pattern>
     </servlet-mapping>
 
     <session-config>
