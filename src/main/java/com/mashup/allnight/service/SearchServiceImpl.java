@@ -5,7 +5,6 @@ import com.mashup.allnight.util.BaseService;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.mashup.allnight.service.SearchServiceType.ServiceType;
 
 @SuppressWarnings("Duplicates")
 //@Named("Test")
