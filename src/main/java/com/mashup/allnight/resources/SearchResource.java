@@ -14,22 +14,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Provider
-@Path("/search")
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
+//@Provider
+//@Path("/search")
+//@Consumes(MediaType.APPLICATION_JSON)
+//@Produces(MediaType.APPLICATION_JSON)
 public class SearchResource {
 
-    @Inject
-    private SearchService searchService;
-
-    @GET
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public String searchIngredient(@QueryParam("ingredient") String ingredient) {
-//        return searchService.testFunction(ingredient);
-        return searchService.searchIngredient(ingredient);
-    }
+////    @Inject
+//    private SearchService searchService = new SearchServiceImpl();
+//
+//    @GET
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public String searchIngredient(@QueryParam("ingredient") String ingredient) {
+////        return searchService.testFunction(ingredient);
+//        return searchService.searchIngredient(ingredient);
+//    }
 //
 //    @GET
 //    @Path("/cocktail")

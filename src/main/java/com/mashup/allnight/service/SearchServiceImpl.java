@@ -7,10 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("Duplicates")
-//@Named("Test")
-//@Default
-//@SearchServiceType(ServiceType.SEARCH)
-public class SearchServiceImpl extends BaseService implements SearchService {
+public class SearchServiceImpl implements SearchService {
 
     @Override
     public String searchIngredient(String ingredient) {
