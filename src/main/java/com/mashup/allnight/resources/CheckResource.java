@@ -16,7 +16,7 @@ import java.net.UnknownHostException;
 public class CheckResource {
 
     @GET
-    public String test() throws UnknownHostException {
+    public String test() {
 
 //        GetResponse response = ElasticSearchClient.getInstance().prepareGet("cocktail", "cocktail", "AWuj2MyFPXZajIsHRb7_").get();
 //        System.out.println(response.getSourceAsString());
