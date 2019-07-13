@@ -1,10 +1,17 @@
 package com.mashup.allnight.service;
 
-import com.mashup.allnight.util.BaseService;
+import com.mashup.allnight.config.ElasticSearchClient;
+import org.elasticsearch.action.search.*;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 
+import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("Duplicates")
 //@Named("Test")
@@ -13,98 +20,101 @@ import java.util.List;
 public class SearchServiceImpl extends BaseService implements SearchService {
 
     @Override
-    public String searchIngredient(String ingredient) {
-
-        List<String> temp = new ArrayList<>();
-        temp.add("abc");
-
-        return ingredient;
+    public List<String> searchIngredient(String ingredient) throws IOException {
 
         //Todo 이전내용
 
-//        System.out.println(ingredient);
-//
-//        MultiSearchRequest multiSearchRequest = new MultiSearchRequest();
-//
-//        SearchRequest oneSearchRequest = new SearchRequest("cocktail");
-//        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-//        searchSourceBuilder.query(QueryBuilders.termQuery("ingredient01", ingredient));
-//        searchSourceBuilder.from(0);
-//        searchSourceBuilder.size(500);
-//        oneSearchRequest.source(searchSourceBuilder);
-//
-//        multiSearchRequest.add(oneSearchRequest);
-//
-//        SearchRequest twoSearchRequest = new SearchRequest("cocktail");
-//        searchSourceBuilder = new SearchSourceBuilder();
-//        searchSourceBuilder.query(QueryBuilders.termQuery("ingredient02", ingredient));
-//        searchSourceBuilder.from(0);
-//        searchSourceBuilder.size(500);
-//        twoSearchRequest.source(searchSourceBuilder);
-//
-//        multiSearchRequest.add(twoSearchRequest);
-//
-//        SearchRequest threeSearchRequest = new SearchRequest("cocktail");
-//        searchSourceBuilder = new SearchSourceBuilder();
-//        searchSourceBuilder.query(QueryBuilders.termQuery("ingredient03", ingredient));
-//        searchSourceBuilder.from(0);
-//        searchSourceBuilder.size(500);
-//        threeSearchRequest.source(searchSourceBuilder);
-//
-//        multiSearchRequest.add(threeSearchRequest);
-//
-//        SearchRequest foreSearchRequest = new SearchRequest("cocktail");
-//        searchSourceBuilder = new SearchSourceBuilder();
-//        searchSourceBuilder.query(QueryBuilders.termQuery("ingredient04", ingredient));
-//        searchSourceBuilder.from(0);
-//        searchSourceBuilder.size(500);
-//        foreSearchRequest.source(searchSourceBuilder);
-//
-//        multiSearchRequest.add(foreSearchRequest);
-//
-//        MultiSearchResponse multiSearchResponse = ElasticSearchClient.getInstance().msearch(multiSearchRequest, RequestOptions.DEFAULT);
-//
-//        System.out.println(multiSearchResponse.getResponses()[0].getResponse().getHits().getTotalHits());
-//        System.out.println(multiSearchResponse.getResponses()[1].getResponse().getHits().getTotalHits());
-//        System.out.println(multiSearchResponse.getResponses()[2].getResponse().getHits().getTotalHits());
-//        System.out.println(multiSearchResponse.getResponses()[3].getResponse().getHits().getTotalHits());
-//
-//        List<String> ingredients = new ArrayList<>();
-//
-//        System.out.println(multiSearchResponse.getResponses().length);
-////        for (int i = 0; i < multiSearchResponse.getResponses().length; i++) {
-////            i++;
-////            System.out.println(i);
-////            String str = "ingredient0" + i;
-////            System.out.println(str);
-////            multiSearchResponse.getResponses()[i].getResponse().getHits().forEach(item -> {
-//////                System.out.println(item.getSourceAsMap().get(str).toString());
-//////                ingredients.add(item.getSourceAsMap().get(str).toString());
-////                ingredients.add(item.getSourceAsMap().get("ingredient01").toString());
-////            });
-////        }
-////        List<String> resIngredient = ingredients.stream().distinct().collect(Collectors.toList());
-////        System.out.println(resIngredient);
-//
-////        SearchResponse searchResponse = client.search(oneSearchRequest, RequestOptions.DEFAULT);
-//
-//
-//        multiSearchResponse.getResponses()[0].getResponse().getHits().forEach(item -> {
-//            ingredients.add(item.getSourceAsMap().get("ingredient01").toString());
-//        });
-//        multiSearchResponse.getResponses()[1].getResponse().getHits().forEach(item -> {
-//            ingredients.add(item.getSourceAsMap().get("ingredient02").toString());
-//        });
-//        multiSearchResponse.getResponses()[2].getResponse().getHits().forEach(item -> {
-//            ingredients.add(item.getSourceAsMap().get("ingredient03").toString());
-//        });
-//        multiSearchResponse.getResponses()[3].getResponse().getHits().forEach(item -> {
-//            ingredients.add(item.getSourceAsMap().get("ingredient04").toString());
-//        });
+        System.out.println(ingredient);
+
+        MultiSearchRequest multiSearchRequest = new MultiSearchRequest();
+
+        SearchRequest oneSearchRequest = new SearchRequest("cocktail");
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(QueryBuilders.termQuery("ingredient01", ingredient));
+        searchSourceBuilder.from(0);
+        searchSourceBuilder.size(500);
+        oneSearchRequest.source(searchSourceBuilder);
+
+        multiSearchRequest.add(oneSearchRequest);
+
+        SearchRequest twoSearchRequest = new SearchRequest("cocktail");
+        searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(QueryBuilders.termQuery("ingredient02", ingredient));
+        searchSourceBuilder.from(0);
+        searchSourceBuilder.size(500);
+        twoSearchRequest.source(searchSourceBuilder);
+
+        multiSearchRequest.add(twoSearchRequest);
+
+        SearchRequest threeSearchRequest = new SearchRequest("cocktail");
+        searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(QueryBuilders.termQuery("ingredient03", ingredient));
+        searchSourceBuilder.from(0);
+        searchSourceBuilder.size(500);
+        threeSearchRequest.source(searchSourceBuilder);
+
+        multiSearchRequest.add(threeSearchRequest);
+
+        SearchRequest foreSearchRequest = new SearchRequest("cocktail");
+        searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(QueryBuilders.termQuery("ingredient04", ingredient));
+        searchSourceBuilder.from(0);
+        searchSourceBuilder.size(500);
+        foreSearchRequest.source(searchSourceBuilder);
+
+        multiSearchRequest.add(foreSearchRequest);
+
+//        MultiSearchResponse sr = ElasticSearchClient.getInstance()
+//                .prepareMultiSearch()
+//                .add(oneSearchRequest)
+//                .add(twoSearchRequest)
+//                .add(threeSearchRequest)
+//                .add(foreSearchRequest)
+//                .get();
+
+        MultiSearchResponse multiSearchResponse = client.msearch(multiSearchRequest, RequestOptions.DEFAULT);
+
+        System.out.println(multiSearchResponse.getResponses()[0].getResponse().getHits().getTotalHits());
+        System.out.println(multiSearchResponse.getResponses()[1].getResponse().getHits().getTotalHits());
+        System.out.println(multiSearchResponse.getResponses()[2].getResponse().getHits().getTotalHits());
+        System.out.println(multiSearchResponse.getResponses()[3].getResponse().getHits().getTotalHits());
+
+        List<String> ingredients = new ArrayList<>();
+
+        System.out.println(multiSearchResponse.getResponses().length);
+//        for (int i = 0; i < multiSearchResponse.getResponses().length; i++) {
+//            i++;
+//            System.out.println(i);
+//            String str = "ingredient0" + i;
+//            System.out.println(str);
+//            multiSearchResponse.getResponses()[i].getResponse().getHits().forEach(item -> {
+////                System.out.println(item.getSourceAsMap().get(str).toString());
+////                ingredients.add(item.getSourceAsMap().get(str).toString());
+//                ingredients.add(item.getSourceAsMap().get("ingredient01").toString());
+//            });
+//        }
 //        List<String> resIngredient = ingredients.stream().distinct().collect(Collectors.toList());
 //        System.out.println(resIngredient);
 
-//        return resIngredient;
+//        SearchResponse searchResponse = client.search(oneSearchRequest, RequestOptions.DEFAULT);
+
+
+        multiSearchResponse.getResponses()[0].getResponse().getHits().forEach(item -> {
+            ingredients.add(item.getSourceAsMap().get("ingredient01").toString());
+        });
+        multiSearchResponse.getResponses()[1].getResponse().getHits().forEach(item -> {
+            ingredients.add(item.getSourceAsMap().get("ingredient02").toString());
+        });
+        multiSearchResponse.getResponses()[2].getResponse().getHits().forEach(item -> {
+            ingredients.add(item.getSourceAsMap().get("ingredient03").toString());
+        });
+        multiSearchResponse.getResponses()[3].getResponse().getHits().forEach(item -> {
+            ingredients.add(item.getSourceAsMap().get("ingredient04").toString());
+        });
+        List<String> resIngredient = ingredients.stream().distinct().collect(Collectors.toList());
+        System.out.println(resIngredient);
+
+        return resIngredient;
     }
 
     @Override
@@ -117,11 +127,29 @@ public class SearchServiceImpl extends BaseService implements SearchService {
 
     }
 
+
+
+
+
     @Override
-    public String testFunction(String ingredient) {
-        return "나의 재료는" + ingredient;
-    }
+    public List<String> testFunction(String ingredient) throws UnknownHostException {
 //
+//        SearchResponse response = ElasticSearchClient.getInstance().prepareSearch("cocktail02")
+//                .setTypes("cocktail02")
+//                .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+//                .setQuery(QueryBuilders.termQuery("ingredients", ingredient))                 // Query
+////                .setPostFilter(QueryBuilders.rangeQuery("age").from(12).to(18))     // Filter
+//                .setFrom(0).setSize(60).setExplain(true)
+//                .get();
+//        System.out.println(response.getHits().getTotalHits());
+        List<String> a = new ArrayList<>();
+        a.add("apple");
+        a.add("banana");
+        return a;
+    }
+
+
+
 //    public static String searchCocktail(List<String> ingredients, int offset, int size) throws IOException {
 //        System.out.println(ingredients.toString());
 //        System.out.println(offset);

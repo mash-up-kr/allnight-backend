@@ -1,11 +1,13 @@
 package com.mashup.allnight.service;
 
+import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.List;
 
 
 public interface SearchService {
 
-    String searchIngredient(String ingredient);
+    List<String> searchIngredient(String ingredient) throws IOException;
 
 
     void searchCocktail();
@@ -14,5 +16,5 @@ public interface SearchService {
     void searchCocktailById();
 
 
-    String testFunction(String ingredient);
+    List<String> testFunction(String ingredient) throws UnknownHostException;
 }
