@@ -6,6 +6,7 @@ import org.elasticsearch.action.search.*;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 
@@ -152,8 +153,20 @@ public class SearchServiceImpl extends BaseService implements SearchService {
     }
 
     @Override
-    public void searchCocktailById() {
+    public Object searchCocktailById(String id) throws IOException {
 
+        SearchRequest searchRequest = new SearchRequest("cocktail02");
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(QueryBuilders.termQuery("_id", id));
+        searchSourceBuilder.timeout(new TimeValue(15, TimeUnit.SECONDS));
+        searchRequest.source(searchSourceBuilder);
+
+        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+
+        System.out.println(searchResponse.getHits().getTotalHits());
+        System.out.println(searchResponse.getHits().getHits().length);
+
+        return searchResponse.getHits().getHits()[0].getSourceAsMap();
     }
 
 

@@ -5,6 +5,7 @@ import com.mashup.allnight.service.SearchService;
 import com.mashup.allnight.service.SearchServiceImpl;
 import com.mashup.allnight.util.FunctionUtil;
 import com.sun.istack.internal.Nullable;
+import org.elasticsearch.search.SearchHit;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -46,8 +47,8 @@ public class SearchResource {
     @Path("/cocktail/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String searchCocktail(@PathParam("id") String id) {
-        return id;
+    public Object searchCocktail(@PathParam("id") String id) throws IOException {
+        return searchService.searchCocktailById(id);
     }
 
 }

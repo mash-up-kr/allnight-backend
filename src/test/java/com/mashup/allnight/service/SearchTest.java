@@ -47,6 +47,7 @@ public class SearchTest {
     @After
     public void tearDown() throws Exception {
         server.stop();
+        client.close();
     }
 
     /**
@@ -92,5 +93,25 @@ public class SearchTest {
         });
 
         System.out.println(res.size());
+    }
+
+
+    @Test
+    public void 칵테일_상세정보_검색() throws IOException {
+
+        String id = "vOeS6WsBTwvkY-8GRCoB";
+
+        SearchRequest searchRequest = new SearchRequest("cocktail02");
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(QueryBuilders.termQuery("_id", id));
+        searchSourceBuilder.timeout(new TimeValue(15, TimeUnit.SECONDS));
+        searchRequest.source(searchSourceBuilder);
+
+        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+
+        System.out.println(searchResponse.getHits().getTotalHits());
+        System.out.println(searchResponse.getHits().getHits().length);
+
+//        System.out.println(searchResponse.getHits().getHits()[0].getSource);
     }
 }

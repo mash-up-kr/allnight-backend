@@ -15,7 +15,7 @@ public interface SearchService {
     List<CocktailResponse> searchCocktail(String ingredients) throws IOException;
 
 
-    void searchCocktailById();
+    Object searchCocktailById(String id) throws IOException;
 
 
     List<String> testFunction(String ingredient) throws UnknownHostException;
