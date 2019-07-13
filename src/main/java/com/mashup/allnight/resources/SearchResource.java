@@ -1,7 +1,9 @@
 package com.mashup.allnight.resources;
 
+import com.mashup.allnight.dto.response.CocktailResponse;
 import com.mashup.allnight.service.SearchService;
 import com.mashup.allnight.service.SearchServiceImpl;
+import com.mashup.allnight.util.FunctionUtil;
 import com.sun.istack.internal.Nullable;
 
 import javax.inject.Inject;
@@ -32,13 +34,12 @@ public class SearchResource {
     @Path("/cocktail")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String searchCocktail(@QueryParam("ingredients") List<String> ingredients,
-                                 @QueryParam("0") int offset,
-                                 @DefaultValue("500") @QueryParam("size") int size,
-                                 @Nullable @DefaultValue("true") @QueryParam("isAlcohol") boolean isAlcohol,
-                                 @Nullable @QueryParam("ingredientCount") int ingredientCount) throws IOException {
-        return "";
-//        return SearchServiceImpl.searchCocktail(ingredients, offset, size);
+    public List<CocktailResponse> searchCocktail(@QueryParam("ingredients") List<String> ingredients,
+                                                 @QueryParam("0") int offset,
+                                                 @DefaultValue("500") @QueryParam("size") int size,
+                                                 @Nullable @DefaultValue("true") @QueryParam("isAlcohol") boolean isAlcohol,
+                                                 @Nullable @QueryParam("ingredientCount") int ingredientCount) throws IOException {
+        return searchService.searchCocktail(FunctionUtil.cleanIngredient(ingredients));
     }
 
     @GET
