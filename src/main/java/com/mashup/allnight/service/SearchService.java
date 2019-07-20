@@ -9,14 +9,20 @@ import java.util.List;
 
 public interface SearchService {
 
+
     List<String> searchIngredient(String ingredient) throws IOException;
+
 
 
     List<CocktailResponse> searchCocktail(String ingredients) throws IOException;
 
 
+
     Object searchCocktailById(String id) throws IOException;
 
 
-    List<String> testFunction(String ingredient) throws UnknownHostException;
+
+    List<CocktailResponse> getStaticCocktailList() throws IOException;
+
+
 }

@@ -51,4 +51,12 @@ public class SearchResource {
         return searchService.searchCocktailById(id);
     }
 
+    @GET
+    @Path("/cocktail/static")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<CocktailResponse> searchCocktail() throws IOException {
+        return searchService.getStaticCocktailList();
+    }
+
 }
