@@ -1,5 +1,6 @@
 package com.mashup.allnight.service;
 
+import com.mashup.allnight.dto.requset.SearchCocktailRequest;
 import com.mashup.allnight.dto.response.CocktailDetailResponse;
 import com.mashup.allnight.dto.response.CocktailResponse;
 
@@ -15,7 +16,7 @@ public interface SearchService {
 
 
 
-    List<CocktailResponse> searchCocktail(String ingredients) throws IOException;
+    List<CocktailResponse> searchCocktail(SearchCocktailRequest request) throws IOException;
 
 
 

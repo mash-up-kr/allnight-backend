@@ -2,16 +2,21 @@ package com.mashup.allnight.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashup.allnight.config.ElasticSearchClient;
+import com.mashup.allnight.dto.requset.SearchCocktailRequest;
 import com.mashup.allnight.dto.response.CocktailDetailResponse;
 import com.mashup.allnight.dto.response.CocktailResponse;
 import com.mashup.allnight.util.Constants;
+import com.mashup.allnight.util.FunctionUtil;
 import org.elasticsearch.action.search.*;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("Duplicates")
@@ -72,13 +77,20 @@ public class SearchServiceImpl extends BaseService implements SearchService {
     }
 
     @Override
-    public List<CocktailResponse> searchCocktail(String ingredients) throws IOException {
+    public List<CocktailResponse> searchCocktail(SearchCocktailRequest request) throws IOException {
 
+        //Todo This Temp - Offset
+        if (request.getOffset() != 0) request.setOffset(request.getOffset() * request.getSize());
+
+        //Todo 방어코드, Null 체크를 어디서 해야지 가장 깔끔?
+        //Todo size 0 일때 전체 쿼리로.
         SearchResponse searchResponse = ElasticSearchClient.getInstance().prepareSearch(Constants.F_INDEX)
                 .setTypes(Constants.F_TYPE)
                 .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-                .setQuery(QueryBuilders.matchQuery("ingredients", ingredients))
-                .setFrom(0).setSize(60).setExplain(true)
+                .setQuery(QueryBuilders.boolQuery()
+                        .filter(isAlcohol(request.isAlcohol()))
+                        .must(QueryBuilders.matchQuery("ingredients", FunctionUtil.cleanIngredient(request.getIngredients()))))
+                .setFrom(request.getOffset()).setSize(request.getSize()).setExplain(true)
                 .get();
 
         //Todo Logging
@@ -122,5 +134,12 @@ public class SearchServiceImpl extends BaseService implements SearchService {
                 searchHit.getSourceAsMap().get("drinkThumb").toString(),
                 searchHit.getSourceAsMap().get("enDrinkName").toString())));
         return res;
+    }
+
+    private QueryBuilder isAlcohol(boolean alcohol) {
+        if (Optional.of(alcohol).orElse(true)) {
+            return QueryBuilders.matchQuery("alcoholic", "Alcoholic");
+        }
+        return QueryBuilders.multiMatchQuery("Non Optional", "alcoholic");
     }
 }

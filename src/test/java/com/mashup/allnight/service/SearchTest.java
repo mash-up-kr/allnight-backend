@@ -8,6 +8,7 @@ import org.apache.http.HttpHost;
 import org.elasticsearch.action.search.*;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.common.unit.TimeValue;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.glassfish.grizzly.http.server.HttpServer;
@@ -153,15 +154,19 @@ public class SearchTest {
 
     @Test
     public void 칵테일_검색_투() throws IOException {
-        String ingredients = "보드카, 레몬";
+        String ingredients = "레몬, 보드카";
 
-        SearchResponse searchResponse = ElasticSearchClient.getInstance().prepareSearch("cocktail02")
-                .setTypes("cocktail02")
+        SearchResponse searchResponse = ElasticSearchClient.getInstance().prepareSearch("f_cocktail")
+                .setTypes("f_cocktail")
                 .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-                .setQuery(QueryBuilders.matchQuery("ingredients", ingredients))               // Query
-                .setFrom(0).setSize(60).setExplain(true)
+//                .setPostFilter(QueryBuilders.termQuery("alcoholic", "Non"))
+                .setQuery(QueryBuilders.boolQuery()
+                        .filter(QueryBuilders.multiMatchQuery("Non Optional", "alcoholic"))
+//                        .filter(QueryBuilders.matchPhrasePrefixQuery("alcoholic", "Optional"))
+                        .must(QueryBuilders.matchAllQuery()))
+//                .setQuery(QueryBuilders.matchQuery("ingredients", ingredients))               // Query
+//                .setFrom(0).setSize(60).setExplain(true)
                 .get();
-
 
         System.out.println(searchResponse.getHits().getTotalHits());
         System.out.println(searchResponse.getHits().getHits().length);
@@ -173,9 +178,9 @@ public class SearchTest {
                     searchHit.getSourceAsMap().get("drinkName").toString(),
                     searchHit.getSourceAsMap().get("alcoholic").toString(),
                     searchHit.getSourceAsMap().get("drinkThumb").toString(),
-                    searchHit.getSourceAsMap().get("EnDrinkName").toString()));
+                    searchHit.getSourceAsMap().get("enDrinkName").toString()));
         });
-
+        res.forEach(item -> System.out.println(item.getEnDrinkName()));
         System.out.println(res.size());
     }
 
