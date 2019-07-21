@@ -1,5 +1,6 @@
 package com.mashup.allnight.service;
 
+import com.mashup.allnight.dto.response.CocktailDetailResponse;
 import com.mashup.allnight.dto.response.CocktailResponse;
 
 import java.io.IOException;
@@ -18,7 +19,7 @@ public interface SearchService {
 
 
 
-    Object searchCocktailById(String id) throws IOException;
+    CocktailDetailResponse searchCocktailById(String id) throws IOException;
 
 
 

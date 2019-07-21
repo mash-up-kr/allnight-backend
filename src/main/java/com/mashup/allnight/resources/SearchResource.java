@@ -1,5 +1,6 @@
 package com.mashup.allnight.resources;
 
+import com.mashup.allnight.dto.response.CocktailDetailResponse;
 import com.mashup.allnight.dto.response.CocktailResponse;
 import com.mashup.allnight.service.SearchService;
 import com.mashup.allnight.service.SearchServiceImpl;
@@ -47,7 +48,7 @@ public class SearchResource {
     @Path("/cocktail/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Object searchCocktail(@PathParam("id") String id) throws IOException {
+    public CocktailDetailResponse searchCocktail(@PathParam("id") String id) throws IOException {
         return searchService.searchCocktailById(id);
     }
 

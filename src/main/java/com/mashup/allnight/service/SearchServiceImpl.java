@@ -1,6 +1,8 @@
 package com.mashup.allnight.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashup.allnight.config.ElasticSearchClient;
+import com.mashup.allnight.dto.response.CocktailDetailResponse;
 import com.mashup.allnight.dto.response.CocktailResponse;
 import com.mashup.allnight.util.Constants;
 import org.elasticsearch.action.search.*;
@@ -18,26 +20,28 @@ import java.util.stream.Collectors;
 //@SearchServiceType(ServiceType.SEARCH)
 public class SearchServiceImpl extends BaseService implements SearchService {
 
+    final ObjectMapper mapper = new ObjectMapper();
+
     @Override
     public List<String> searchIngredient(String ingredient) throws IOException {
 
         SearchRequestBuilder srb1 = ElasticSearchClient.getInstance()
-                .prepareSearch("cocktail02")
+                .prepareSearch(Constants.F_INDEX)
                 .setQuery(QueryBuilders.matchQuery("ingredient01", ingredient))
                 .setSize(500);
 
         SearchRequestBuilder srb2 = ElasticSearchClient.getInstance()
-                .prepareSearch("cocktail02")
+                .prepareSearch(Constants.F_INDEX)
                 .setQuery(QueryBuilders.matchQuery("ingredient02", ingredient))
                 .setSize(500);
 
         SearchRequestBuilder srb3 = ElasticSearchClient.getInstance()
-                .prepareSearch("cocktail02")
+                .prepareSearch(Constants.F_INDEX)
                 .setQuery(QueryBuilders.matchQuery("ingredient03", ingredient))
                 .setSize(500);
 
         SearchRequestBuilder srb4 = ElasticSearchClient.getInstance()
-                .prepareSearch("cocktail02")
+                .prepareSearch(Constants.F_INDEX)
                 .setQuery(QueryBuilders.matchQuery("ingredient04", ingredient))
                 .setSize(500);
 
@@ -70,8 +74,8 @@ public class SearchServiceImpl extends BaseService implements SearchService {
     @Override
     public List<CocktailResponse> searchCocktail(String ingredients) throws IOException {
 
-        SearchResponse searchResponse = ElasticSearchClient.getInstance().prepareSearch("cocktail02")
-                .setTypes("cocktail02")
+        SearchResponse searchResponse = ElasticSearchClient.getInstance().prepareSearch(Constants.F_INDEX)
+                .setTypes(Constants.F_TYPE)
                 .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
                 .setQuery(QueryBuilders.matchQuery("ingredients", ingredients))
                 .setFrom(0).setSize(60).setExplain(true)
@@ -85,22 +89,22 @@ public class SearchServiceImpl extends BaseService implements SearchService {
     }
 
     @Override
-    public Object searchCocktailById(String id) throws IOException {
+    public CocktailDetailResponse searchCocktailById(String id) throws IOException {
 
-        SearchResponse response = ElasticSearchClient.getInstance().prepareSearch("cocktail02")
-                .setTypes("cocktail02")
+        SearchResponse response = ElasticSearchClient.getInstance().prepareSearch(Constants.F_INDEX)
+                .setTypes(Constants.F_TYPE)
                 .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
                 .setQuery(QueryBuilders.termQuery("_id", id))
-                .setFrom(0).setSize(60).setExplain(true)
+                .setFrom(0).setSize(1).setExplain(false)
                 .get();
 
-        return response.getHits().getHits()[0].getSourceAsMap();
+        return mapper.readValue(response.getHits().getHits()[0].getSourceAsString(), CocktailDetailResponse.class);
     }
 
     @Override
     public List<CocktailResponse> getStaticCocktailList() throws IOException {
-        SearchResponse searchResponse = ElasticSearchClient.getInstance().prepareSearch("cocktail02")
-                .setTypes("cocktail02")
+        SearchResponse searchResponse = ElasticSearchClient.getInstance().prepareSearch(Constants.F_INDEX)
+                .setTypes(Constants.F_TYPE)
                 .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
                 .setQuery(QueryBuilders.termsQuery("_id", Constants.COCKTAIL_LIST))
                 .setFrom(0).setSize(10).setExplain(true)
@@ -116,7 +120,7 @@ public class SearchServiceImpl extends BaseService implements SearchService {
                 searchHit.getSourceAsMap().get("drinkName").toString(),
                 searchHit.getSourceAsMap().get("alcoholic").toString(),
                 searchHit.getSourceAsMap().get("drinkThumb").toString(),
-                searchHit.getSourceAsMap().get("EnDrinkName").toString())));
+                searchHit.getSourceAsMap().get("enDrinkName").toString())));
         return res;
     }
 }
