@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 //@SearchServiceType(ServiceType.SEARCH)
 public class SearchServiceImpl extends BaseService implements SearchService {
 
-    final ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @Override
     public List<String> searchIngredient(String ingredient) throws IOException {
