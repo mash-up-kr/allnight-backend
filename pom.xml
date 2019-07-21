@@ -173,7 +173,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven-war-plugin.version>3.2.2</maven-war-plugin.version>
         <elasticsearch.version>5.5.1</elasticsearch.version>
-        <jackson.version>2.9.8</jackson.version>
+        <jackson.version>2.10.0.pr1</jackson.version>
         <lombok.version>1.16.8</lombok.version>
     </properties>
 
